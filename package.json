@@ -1,0 +1,50 @@
+{
+  "name": "lottery",
+  "version": "1.0.0",
+  "description": "抽奖系统",
+  "main": "electron/main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "MarioBaBa",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "22.3.24",
+    "electron-builder": "23.6.0",
+    "concurrently": "7.6.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "chokidar": "^2.0.3",
+    "express": "^4.16.3",
+    "node-xlsx": "^0.12.1",
+    "opn": "^5.3.0"
+  },
+  "build": {
+    "appId": "com.mariobaba.lottery",
+    "productName": "抽奖系统",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "product/dist/**/*",
+      "node_modules/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "product/src/assets/icon.png"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "product/src/assets/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "product/src/assets/icon.png"
+    }
+  }
+}
