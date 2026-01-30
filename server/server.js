@@ -42,7 +42,10 @@ if (process.argv.length > 2) {
   port = process.argv[2];
 }
 
-app.use(express.static(cwd));
+// 设置静态文件目录
+const frontendPath = path.join(__dirname, '/public')
+
+app.use(express.static(frontendPath));
 
 //请求地址为空，默认重定向到index.html文件
 app.get("/", (req, res) => {
@@ -144,7 +147,7 @@ router.post("/export", (req, res, next) => {
     outData = outData.concat(luckyData[item.type] || []);
   });
 
-  writeXML(outData, "/抽奖结果.xlsx")
+  writeXML(outData, "/public/抽奖结果.xlsx")
     .then(dt => {
       // res.download('/抽奖结果.xlsx');
       res.status(200).json({

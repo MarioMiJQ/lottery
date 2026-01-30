@@ -4,3 +4,4 @@ dist/
 temp.json
 error.json
 release/
+server/public/

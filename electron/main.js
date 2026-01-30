@@ -8,7 +8,14 @@ let serverProcess; // 保存服务器进程引用
 
 function startServer() {
   // 启动Express服务器作为子进程
-  const backendPath = path.join(__dirname, '..', 'server/index.js')
+  let backendPath;
+  if (app.isPackaged) {
+    // 打包后的环境中，server 目录在 asar 的同级 resources 目录下
+    backendPath = path.join(process.resourcesPath, 'server', 'index.js');
+  } else {
+    // 开发环境中，server 目录在项目根目录
+    backendPath = path.join(__dirname, '..', 'server', 'index.js');
+  }
   try {
     serverProcess = spawn('node', [backendPath, '8888'], {
       stdio: 'inherit',
@@ -44,15 +51,15 @@ function createWindow () {
     height: 800,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
+      contextIsolation: true,
       preload: path.join(__dirname, '.', 'preload.js')
     },
     maximize: true  // 添加这一行使窗口启动时最大化
   });
 
   // 加载前端页面 - 假设前端构建后在dist目录
-  const indexPath = path.join(__dirname, '..', 'product', 'dist', 'index.html');
-  mainWindow.loadFile(indexPath);
+  // const indexPath = path.join(__dirname, '..', 'product', 'dist', 'index.html');
+  mainWindow.loadURL('http://localhost:8888');
 
   // 打开开发者工具（可选）
   mainWindow.webContents.openDevTools();

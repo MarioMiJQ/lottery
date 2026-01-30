@@ -6,14 +6,16 @@
   "scripts": {
     "start": "electron .",
     "build": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist": "electron-builder",
+    "cp": "copyfiles -u 2 \"product/dist/**/*\" \"server/public/\""
   },
   "author": "MarioBaBa",
   "license": "MIT",
   "devDependencies": {
     "electron": "22.3.24",
     "electron-builder": "23.6.0",
-    "concurrently": "7.6.0"
+    "concurrently": "7.6.0",
+    "copyfiles": "2.4.1"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
@@ -29,10 +31,20 @@
       "output": "release"
     },
     "files": [
-      "product/dist/**/*",
+      "server/**/*",
       "node_modules/**/*",
       "electron/**/*",
       "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "server",
+        "to": "server"
+      },
+      {
+        "from": "electron",
+        "to": "electron"
+      }
     ],
     "win": {
       "target": "nsis",
