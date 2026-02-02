@@ -17,27 +17,27 @@ function startServer() {
     backendPath = path.join(__dirname, '..', 'server', 'index.js');
   }
   try {
-    serverProcess = spawn('node', [backendPath, '8888'], {
-      stdio: 'inherit',
-      env: { ...process.env }
+    serverProcess = spawn('node', [backendPath, '8888', 'n'], {
+      stdio: 'pipe',  // 修改此项，将'inherit'改为'pipe'
+      env: { ...process.env },
+      detached: !app.isPackaged  // 在开发环境下分离进程
     })
 
     if (serverProcess) {
       console.log('Express server started on port 8888')
-
-      serverProcess.stdout.on('data', (data) => {
-        console.log(`服务器输出: ${data}`);
-      });
-
-      serverProcess.stderr.on('data', (data) => {
-        console.error(`服务器错误: ${data}`);
-      });
-
-      serverProcess.on('close', (code) => {
-        console.log(`服务器进程退出，代码 ${code}`);
-      });
     } else {
       console.error('Failed to start server process');
+    }
+    
+    // 如果需要调试，可以监听输出
+    if (!app.isPackaged) {
+      serverProcess.stdout.on('data', (data) => {
+        console.log(`Server stdout: ${data}`);
+      });
+      
+      serverProcess.stderr.on('data', (data) => {
+        console.error(`Server stderr: ${data}`);
+      });
     }
   } catch (error) {
     console.error('Error starting server:', error);

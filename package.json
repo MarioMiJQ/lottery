@@ -42,8 +42,8 @@
         "to": "server"
       },
       {
-        "from": "electron",
-        "to": "electron"
+        "from": "node_modules",
+        "to": "node_modules"
       }
     ],
     "win": {
@@ -57,6 +57,12 @@
     "linux": {
       "target": "AppImage",
       "icon": "product/src/assets/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
     }
   }
 }
