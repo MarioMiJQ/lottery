@@ -68,7 +68,7 @@ function writeXML(data, name) {
   ]);
 
   return new Promise((resolve, reject) => {
-    fs.writeFile(path.join(process.cwd(), name), buffer, err => {
+    fs.writeFile(path.join(__dirname, name), buffer, err => {
       if (err) {
         reject(err);
         return;

@@ -4,12 +4,12 @@
   "description": "抽奖系统",
   "main": "electron/main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "chcp 65001 && electron .",
     "build": "electron-builder --dir",
-    "dist": "electron-builder",
+    "pkg": "cd product && npm run build && cd .. && npm run cp && electron-builder",
     "cp": "copyfiles -u 2 \"product/dist/**/*\" \"server/public/\""
   },
-  "author": "MarioBaBa",
+  "author": "ccevet",
   "license": "MIT",
   "devDependencies": {
     "electron": "22.3.24",
@@ -25,14 +25,14 @@
     "opn": "^5.3.0"
   },
   "build": {
-    "appId": "com.mariobaba.lottery",
+    "appId": "com.ccevet.lottery",
     "productName": "抽奖系统",
     "directories": {
       "output": "release"
     },
     "files": [
-      "server/**/*",
-      "node_modules/**/*",
+      "!server/**/*",
+      "!node_modules/**/*",
       "electron/**/*",
       "package.json"
     ],
@@ -62,7 +62,9 @@
       "oneClick": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true,
-      "createStartMenuShortcut": true
+      "createStartMenuShortcut": true,
+      "perMachine": true,
+      "runAfterFinish": false
     }
   }
 }

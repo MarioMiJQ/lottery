@@ -19,7 +19,12 @@ function startServer() {
   try {
     serverProcess = spawn('node', [backendPath, '8888', 'n'], {
       stdio: 'pipe',  // 修改此项，将'inherit'改为'pipe'
-      env: { ...process.env },
+      env: {
+        ...process.env,
+        CHARSET: 'utf-8',
+        LANG: 'en_US.UTF-8',
+        LC_ALL: 'en_US.UTF-8'
+      },
       detached: !app.isPackaged  // 在开发环境下分离进程
     })
 
@@ -28,13 +33,15 @@ function startServer() {
     } else {
       console.error('Failed to start server process');
     }
-    
+
     // 如果需要调试，可以监听输出
     if (!app.isPackaged) {
+      // 设置编码
+      serverProcess.stdout.setEncoding('utf8')
+      serverProcess.stderr.setEncoding('utf8')
       serverProcess.stdout.on('data', (data) => {
         console.log(`Server stdout: ${data}`);
       });
-      
       serverProcess.stderr.on('data', (data) => {
         console.error(`Server stderr: ${data}`);
       });
@@ -44,7 +51,7 @@ function startServer() {
   }
 }
 
-function createWindow () {
+function createWindow() {
   // 创建浏览器窗口
   mainWindow = new BrowserWindow({
     width: 1200,

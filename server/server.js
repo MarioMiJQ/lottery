@@ -159,7 +159,7 @@ router.post("/export", (req, res, next) => {
     .catch(err => {
       res.json({
         type: "error",
-        error: err.error
+        error: err
       });
       log(`导出数据失败！`);
     });
