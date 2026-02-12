@@ -118,7 +118,9 @@ function initCards() {
     showCards = [],
     length = member.length;
 
+  // 是否深色，用于像素方式显示标语，例如年信息
   let isBold = false,
+    // 未开始抽奖时，显示表格
     showTable = basicData.leftUsers.length === basicData.users.length,
     index = 0,
     totalMember = member.length,
@@ -140,6 +142,7 @@ function initCards() {
   for (let i = 0; i < ROW_COUNT; i++) {
     for (let j = 0; j < COLUMN_COUNT; j++) {
       isBold = HIGHLIGHT_CELL.includes(j + "-" + i);
+      // 生成dom卡片
       var element = createCard(
         member[index % length],
         isBold,
@@ -147,7 +150,9 @@ function initCards() {
         showTable
       );
 
+      // 将卡片作为 3D 对象添加到场景
       var object = new THREE.CSS3DObject(element);
+      // 初始位置完全随机（范围 -2000～2000），营造散落效果，为后续动画做准备。
       object.position.x = Math.random() * 4000 - 2000;
       object.position.y = Math.random() * 4000 - 2000;
       object.position.z = Math.random() * 4000 - 2000;
@@ -163,7 +168,7 @@ function initCards() {
     }
   }
 
-  // sphere
+  // sphere 地球
 
   var vector = new THREE.Vector3();
 
